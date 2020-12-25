@@ -18,65 +18,65 @@ import Label from 'react-bulma-companion/lib/Label';
 import Help from 'react-bulma-companion/lib/Help';
 
 import useKeyPress from '_hooks/useKeyPress';
-import { postCheckUsername } from '_api/users';
-import { validateUsername, validatePassword } from '_utils/validation';
+import { postCheckEmail } from '_api/users';
+import { validateEmail, validatePassword } from '_utils/validation';
 import { attemptRegister } from '_thunks/auth';
 
 export default function Register() {
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState('');
-  const [usernameMessage, setUsernameMessage] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailMessage, setEmailMessage] = useState('');
   const [password, setPassword] = useState('');
   const [passwordMessage, setPasswordMessage] = useState('');
-  const [usernameAvailable, setUsernameAvailable] = useState(false);
+  const [emailAvailable, setEmailAvailable] = useState(false);
   const [passwordValid, setPasswordValid] = useState(false);
 
-  const checkPassword = (newUsername, newPassword) => {
-    const { valid, message } = validatePassword(newUsername, newPassword);
+  const checkPassword = (newEmail, newPassword) => {
+    const { valid, message } = validatePassword(newEmail, newPassword);
 
     setPasswordValid(valid);
     setPasswordMessage(message);
   };
 
-  const checkUsername = newUsername => {
-    const { valid, message } = validateUsername(newUsername);
+  const checkEmail = newEmail => {
+    const { valid, message } = validateEmail(newEmail);
 
     if (valid) {
-      setUsernameMessage('Checking username...');
-      setUsernameAvailable(false);
+      setEmailMessage('Checking email...');
+      setEmailAvailable(false);
 
-      postCheckUsername(newUsername)
+      postCheckEmail(newEmail)
         .then(res => {
-          setUsernameAvailable(res.available);
-          setUsernameMessage(res.message);
+          setEmailAvailable(res.available);
+          setEmailMessage(res.message);
         })
         .catch(R.identity);
     } else {
-      setUsernameAvailable(valid);
-      setUsernameMessage(message);
+      setEmailAvailable(valid);
+      setEmailMessage(message);
     }
   };
 
-  const updateUsername = newUserName => {
-    setUsername(newUserName);
-    checkPassword(newUserName, password);
+  const updateEmail = newEmail => {
+    setEmail(newEmail);
+    checkPassword(newEmail, password);
   };
 
-  const handleUsernameChange = e => {
-    updateUsername(e.target.value);
-    checkUsername(e.target.value);
+  const handleEmailChange = e => {
+    updateEmail(e.target.value);
+    checkEmail(e.target.value);
   };
 
   const handlePasswordChange = e => {
     setPassword(e.target.value);
-    checkPassword(username, e.target.value);
+    checkPassword(email, e.target.value);
   };
 
   const register = () => {
-    if (usernameAvailable && passwordValid) {
+    if (emailAvailable && passwordValid) {
       const newUser = {
-        username,
+        email,
         password,
       };
 
@@ -100,32 +100,32 @@ export default function Register() {
         </Link>
       </p>
       <Field>
-        <Label htmlFor="username">
-          Username
+        <Label htmlFor="email">
+          Email
         </Label>
         <Control iconsRight>
           <Input
-            id="username"
-            placeholder="Username"
-            color={username ? (usernameAvailable ? 'success' : 'danger') : undefined}
-            value={username}
-            onChange={handleUsernameChange}
+            id="email"
+            placeholder="email"
+            color={email ? (emailAvailable ? 'success' : 'danger') : undefined}
+            value={email}
+            onChange={handleEmailChange}
           />
-          {username && (
+          {email && (
             <Icon
               size="small"
               align="right"
-              color={usernameAvailable ? 'success' : 'danger'}
+              color={emailAvailable ? 'success' : 'danger'}
             >
               <FontAwesomeIcon
-                icon={usernameAvailable ? faCheck : faExclamationTriangle}
+                icon={emailAvailable ? faCheck : faExclamationTriangle}
               />
             </Icon>
           )}
         </Control>
-        {username && (
-          <Help color={usernameAvailable ? 'success' : 'danger'}>
-            {usernameMessage}
+        {email && (
+          <Help color={emailAvailable ? 'success' : 'danger'}>
+            {emailMessage}
           </Help>
         )}
       </Field>
@@ -162,7 +162,7 @@ export default function Register() {
       </Field>
       <hr className="separator" />
       <div className="has-text-right">
-        <Button color="success" onClick={register} disabled={!passwordValid || !usernameAvailable}>
+        <Button color="success" onClick={register} disabled={!passwordValid || !emailAvailable}>
           Create Account
         </Button>
       </div>

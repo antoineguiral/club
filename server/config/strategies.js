@@ -3,14 +3,16 @@ const { User } = require('../database/schemas');
 
 const Strategies = module.exports;
 
-Strategies.local = new LocalStrategy((username, password, done) => {
-  User.findOne({ username }, (err, user) => {
+Strategies.local = new LocalStrategy({
+  usernameField: 'email',
+}, (email, password, done) => {
+  User.findOne({ email }, (err, user) => {
     if (err) { return done(err); }
     if (!user) {
-      return done(null, false, { message: 'Username doesn\'t exist' });
+      return done(null, false, { message: 'Email doesn\'t exist' });
     }
     if (!user.validPassword(password)) {
-      return done(null, false, { message: 'Incorrect username or password' });
+      return done(null, false, { message: 'Incorrect email or password' });
     }
     return done(null, user);
   });

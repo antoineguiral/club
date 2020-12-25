@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('mongoose-type-email');
 const { MongooseAutoIncrementID } = require('mongoose-auto-increment-reworked');
 const bcrypt = require('bcryptjs');
 const R = require('ramda');
@@ -6,8 +7,7 @@ const R = require('ramda');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  username: { type: String, lowercase: true, required: true, unique: true, immutable: true },
-  username_case: { type: String, required: true },
+  email: { type: mongoose.SchemaTypes.Email, required: true },
   password: { type: String, required: true },
   profile_pic: { type: String },
   first_name: { type: String, maxlength: 20 },

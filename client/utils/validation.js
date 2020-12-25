@@ -1,20 +1,12 @@
 import R from 'ramda';
+import validator from 'validator';
 
-export const validateUsername = username => {
+export const validateEmail = email => {
   let valid = true;
-  let message = 'Username Valid';
+  let message = 'Email Valid';
 
-  if (!R.match(/^[a-zA-Z0-9_]+$/, username).length) {
-    message = 'Invalid character used';
-    valid = false;
-  } else if (username.length < 4) {
-    message = 'Username must be at least four characters';
-    valid = false;
-  } else if (username.length > 20) {
-    message = 'Username must be 20 characters or less';
-    valid = false;
-  } else if (R.match(/[a-zA-Z]/g, username).length < 4) {
-    message = 'Username must include at least four letters';
+  if (!validator.isEmail(email)) {
+    message = 'Invalid email!';
     valid = false;
   }
   return { valid, message };

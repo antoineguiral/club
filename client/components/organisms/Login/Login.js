@@ -21,24 +21,23 @@ export default function Login() {
   const dispatch = useDispatch();
 
   const [remember, setRemember] = useState(false);
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    const username = localStorage.getItem('username');
-    if (username) {
+    const email = localStorage.getItem('email');
+    if (email) {
       setRemember(true);
-      setUsername(username);
+      setEmail(email);
     }
   }, []);
 
   const login = () => {
-    const userCredentials = { username, password };
+    const userCredentials = { email, password };
 
     if (remember) {
-      localStorage.setItem('username', username);
+      localStorage.setItem('email', email);
     }
-
     dispatch(attemptLogin(userCredentials))
       .catch(R.identity);
   };
@@ -46,11 +45,11 @@ export default function Login() {
   useKeyPress('Enter', login);
 
   const rememberMe = () => {
-    localStorage.removeItem('username');
+    localStorage.removeItem('email');
     setRemember(!remember);
   };
 
-  const updateUsername = e => setUsername(e.target.value);
+  const updateEmail = e => setEmail(e.target.value);
   const updatePassword = e => setPassword(e.target.value);
 
   return (
@@ -66,9 +65,9 @@ export default function Login() {
         </Link>
       </Block>
       <FormInput
-        onChange={updateUsername}
-        placeholder="Username"
-        value={username}
+        onChange={updateEmail}
+        placeholder="Email"
+        value={email}
         leftIcon={faUser}
       />
       <FormInput

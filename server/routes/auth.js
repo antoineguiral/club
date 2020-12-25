@@ -7,22 +7,19 @@ const router = express.Router();
 module.exports = router;
 
 router.post('/register', (req, res) => {
-  if (!req || !req.body || !req.body.username || !req.body.password) {
-    res.status(400).send({ message: 'Username and Password required' });
+  if (!req || !req.body || !req.body.email || !req.body.password) {
+    res.status(400).send({ message: 'Email and Password required' });
   }
 
-  req.body.username_case = req.body.username;
-  req.body.username = req.body.username.toLowerCase();
-
-  const { username } = req.body;
+  const { email } = req.body;
   const newUser = User(req.body);
 
-  User.find({ username }, (err, users) => {
+  User.find({ email }, (err, users) => {
     if (err) {
       res.status(400).send({ message: 'Create user failed', err });
     }
     if (users[0]) {
-      res.status(400).send({ message: 'Username exists' });
+      res.status(400).send({ message: 'Email exists' });
     }
 
     newUser.hashPassword().then(() => {
@@ -39,8 +36,7 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res, next) => {
-  req.body.username = req.body.username.toLowerCase();
-
+  console.log(req.body)
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       return next(err);

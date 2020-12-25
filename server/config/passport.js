@@ -5,6 +5,7 @@ const uuid        = require('uuid');
 const mongoose    = require('mongoose');
 
 const Strategies  = require('./strategies');
+const LocalStrategy = require('passport-local').Strategy;
 const { User }    = require('../database/schemas');
 
 module.exports = app => {

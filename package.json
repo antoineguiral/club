@@ -1,7 +1,7 @@
 {
-  "name": "mern-boilerplate",
+  "name": "lpla-club",
   "version": "1.0.0",
-  "description": "A full MERN stack boilerplate",
+  "description": "Fundraising app",
   "main": "server/index.js",
   "scripts": {
     "build": "./scripts/build-prd.sh",
@@ -19,31 +19,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/djizco/mern-boilerplate.git"
+    "url": "git@github.com:antoineguiral/club.git"
   },
-  "author": {
-    "name": "Federico Rojas",
-    "email": "djizco@yahoo.com",
-    "url": "https://github.com/djizco"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/djizco/mern-boilerplate/issues"
-  },
-  "keywords": [
-    "react",
-    "redux",
-    "webpack",
-    "express",
-    "passport",
-    "bulma",
-    "fontawesome",
-    "ramda",
-    "eslint",
-    "jest",
-    "enzyme"
-  ],
-  "homepage": "https://github.com/djizco/mern-boilerplate#readme",
   "engines": {
     "node": ">=10.0.0"
   },
@@ -71,6 +48,7 @@
     "json-style-converter": "^1.0.3",
     "mongoose": "^5.10.9",
     "mongoose-auto-increment-reworked": "^1.2.1",
+    "mongoose-type-email": "^1.1.2",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "prop-types": "^15.7.2",
@@ -89,6 +67,7 @@
     "seamless-immutable": "^7.1.4",
     "terser-webpack-plugin": "^4.2.2",
     "uuid": "^8.3.1",
+    "validator": "^13.5.2",
     "webpack": "^4.44.2",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^3.3.12"
